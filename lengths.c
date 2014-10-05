@@ -21,6 +21,11 @@ void lengths(FILE *src) {
 
 
 int main(int argc, char *argv[]) {
-    // FIXME: read files listed in cmd line args
-    lengths(stdin);
+    // FIXME: Handle '-' meaning stdin
+    if (argc == 1)
+        lengths(stdin);
+    else
+        while (--argc > 0)
+            // FIXME: Nasty segfault if file doesn't exist
+            lengths(fopen(*++argv, "r"));
 }
