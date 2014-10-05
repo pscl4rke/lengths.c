@@ -24,11 +24,12 @@ void lengths_in_path(char *path) {
     FILE *src;
 
     src = strcmp(path, "-") ? fopen(path, "r") : stdin;
-    if (src != NULL) {
+    if (src == NULL) {
+        perror(path);
+    } else {
         lengths_in_file(src);
         fclose(src);
     }
-    // FIXME: Give a meaningful error msg if fopen failed
 }
 
 
