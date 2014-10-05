@@ -34,8 +34,8 @@ void lengths(FILE *src) {
     char cbuf[LINELEN];
     int clen;
 
-    while ((clen = read_a_line(src, &cbuf)) != NOMORELINES) {
-        printf("%6i  %s\n", clen, &cbuf);
+    while ((clen = read_a_line(src, cbuf)) != NOMORELINES) {
+        printf("%6i  %s\n", clen, cbuf);
     }
 }
 
