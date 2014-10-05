@@ -23,16 +23,18 @@ void lengths_in_file(FILE *src) {
 void lengths_in_path(char *path) {
     FILE *src;
 
-    if ((src = fopen(path, "r")) != NULL)
+    src = strcmp(path, "-") ? fopen(path, "r") : stdin;
+    if (src != NULL) {
         lengths_in_file(src);
+        fclose(src);
+    }
     // FIXME: Give a meaningful error msg if fopen failed
 }
 
 
 int main(int argc, char *argv[]) {
-    // FIXME: Handle '-' meaning stdin
     if (argc == 1)
-        lengths_in_file(stdin);
+        lengths_in_path("-");
     else
         while (--argc > 0)
             lengths_in_path(*++argv);
