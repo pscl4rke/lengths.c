@@ -34,15 +34,14 @@ void lengths(FILE *src) {
     char cbuf[LINELEN];
     int clen;
 
-    printf("Hello\n");
     while ((clen = read_a_line(src, &cbuf)) != NOMORELINES) {
-        printf(" (%i) (%s) \n", clen, &cbuf);
+        printf("%6i  %s\n", clen, &cbuf);
     }
-    printf("Bye\n");
 }
 
 
 int main(int argc, char *argv[]) {
+    // FIXME: read files listed in cmd line args
     lengths(stdin);
 }
 
