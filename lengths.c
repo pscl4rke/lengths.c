@@ -4,47 +4,19 @@
 
 
 #include <stdio.h>
-
-// FIXME: Really want to handle lines of any length
-//  (see if linebuffer in gnulib would help)
-#define LINELEN 2048
-
-#define NOMORELINES -1
-
-
-int read_a_line(FILE *src, char cbuf[]) {
-    int clen = 0;
-    char c;
-    int looped = 0;
-
-    while ((c = getc(src)) != EOF) {
-        if (clen + 2 > LINELEN) {
-            // FIXME: Nasty cludge to protect against buffer overflow
-            fprintf(stderr, "Line too long\n");
-            exit(1);
-        }
-        looped = 1;
-        if (c == '\n') {
-            break;
-        } else {
-            cbuf[clen++] = c;
-        }
-    }
-    cbuf[clen] = '\0';
-    if (looped)
-        return clen;
-    else
-        return NOMORELINES;
-}
+#include <stdlib.h>
 
 
 void lengths(FILE *src) {
-    char cbuf[LINELEN];
-    int clen;
+    char *cbufp = NULL;
+    int clen, cbufc;
 
-    while ((clen = read_a_line(src, cbuf)) != NOMORELINES) {
-        printf("%6i  %s\n", clen, cbuf);
+    while ((clen = getline(&cbufp, &cbufc, src)) != -1) {
+        if (clen > 0 & *(cbufp + clen - 1) == '\n')
+            cbufp[--clen] = '\0';
+        printf("%6i  %s\n", clen, cbufp);
     }
+    free(cbufp);
 }
 
 
