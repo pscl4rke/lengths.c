@@ -17,8 +17,12 @@ int read_a_line(FILE *src, char cbuf[]) {
     char c;
     int looped = 0;
 
-    // FIXME: Doesn't handle buffer overflows!
     while ((c = getc(src)) != EOF) {
+        if (clen + 2 > LINELEN) {
+            // FIXME: Nasty cludge to protect against buffer overflow
+            fprintf(stderr, "Line too long\n");
+            exit(1);
+        }
         looped = 1;
         if (c == '\n') {
             break;
