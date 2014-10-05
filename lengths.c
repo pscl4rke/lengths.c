@@ -24,5 +24,3 @@ int main(int argc, char *argv[]) {
     // FIXME: read files listed in cmd line args
     lengths(stdin);
 }
-
-
