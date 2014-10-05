@@ -1,5 +1,8 @@
 
 
+// FIXME: This doesn't handle dos line endings
+
+
 #include <stdio.h>
 
 // FIXME: Really want to handle lines of any length
@@ -14,12 +17,13 @@ int read_a_line(FILE *src, char cbuf[]) {
     char c;
     int looped = 0;
 
+    // FIXME: Doesn't handle buffer overflows!
     while ((c = getc(src)) != EOF) {
         looped = 1;
-        cbuf[clen++] = c;
         if (c == '\n') {
-            clen--;
             break;
+        } else {
+            cbuf[clen++] = c;
         }
     }
     cbuf[clen] = '\0';
