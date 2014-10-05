@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 
-void lengths(FILE *src) {
+void lengths_in_file(FILE *src) {
     char *cbufp = NULL;
     int clen, cbufc;
 
@@ -20,12 +20,20 @@ void lengths(FILE *src) {
 }
 
 
+void lengths_in_path(char *path) {
+    FILE *src;
+
+    if ((src = fopen(path, "r")) != NULL)
+        lengths_in_file(src);
+    // FIXME: Give a meaningful error msg if fopen failed
+}
+
+
 int main(int argc, char *argv[]) {
     // FIXME: Handle '-' meaning stdin
     if (argc == 1)
-        lengths(stdin);
+        lengths_in_file(stdin);
     else
         while (--argc > 0)
-            // FIXME: Nasty segfault if file doesn't exist
-            lengths(fopen(*++argv, "r"));
+            lengths_in_path(*++argv);
 }
